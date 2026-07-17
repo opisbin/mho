@@ -10,8 +10,8 @@ export default function Footer() {
     // Hit counter once per browser session, then read lifetime tally
     const already = sessionStorage.getItem("visit-counted");
     const endpoint = already
-      ? "https://abacus.jasoncameron.dev/get/srbh-portfolio-visits/visitors"
-      : "https://abacus.jasoncameron.dev/hit/srbh-portfolio-visits/visitors";
+      ? "https://abacus.jasoncameron.dev/get/mho-umber-vercel-app/visitors"
+      : "https://abacus.jasoncameron.dev/hit/mho-umber-vercel-app/visitors";
     fetch(endpoint)
       .then((r) => r.json())
       .then((d) => {
