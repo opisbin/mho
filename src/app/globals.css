@@ -57,6 +57,11 @@
   --accent: #5b8def;
   --grind-empty: #1a1a1a;
   --grind-active: #2a7a2a;
+  --contrib-0: #1a1a1a;
+  --contrib-1: #0d4429;
+  --contrib-2: #166534;
+  --contrib-3: #22c55e;
+  --contrib-4: #4ade80;
   --nav-bg: #000000;
   --hover-text: #ffffff;
 }
@@ -75,6 +80,11 @@
   --accent: #2563eb;
   --grind-empty: #e5e5e5;
   --grind-active: #16a34a;
+  --contrib-0: #ebedf0;
+  --contrib-1: #9be9a8;
+  --contrib-2: #40c463;
+  --contrib-3: #30a14e;
+  --contrib-4: #216e39;
   --nav-bg: #ffffff;
   --hover-text: #0a0a0a;
 }
@@ -135,6 +145,29 @@ body {
 .surface-hover:hover {
   border-color: var(--border);
   transform: translateY(-1px);
+}
+
+/* Primary button — solid fill, text on bg */
+.btn-primary {
+  background: var(--text);
+  color: var(--bg);
+  border: 1px solid var(--text);
+  transition: opacity 0.2s ease;
+}
+.btn-primary:hover {
+  opacity: 0.85;
+}
+
+/* Ghost button — stroke only, transparent */
+.btn-ghost {
+  border-color: var(--text-muted);
+  color: var(--text-muted);
+  background: transparent;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.btn-ghost:hover {
+  border-color: var(--text);
+  color: var(--text);
 }
 
 * {

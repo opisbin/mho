@@ -16,7 +16,7 @@ export default function Home() {
         <ProjectsSection />
         <BlogSection />
         <ScrollReveal>
-          <footer className="border-t bd-cute mt-16 pt-8 pb-4 flex items-center justify-between">
+          <footer className="border bd-cute rounded-xl p-4 sm:p-6 flex items-center justify-between">
             <p className="text-xs tx-muted-darker">© {new Date().getFullYear()} Meherab Hossain</p>
             <SocialLinks />
           </footer>

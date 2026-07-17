@@ -60,26 +60,45 @@ export default function Navbar() {
       </div>
       <AnimatePresence>
         {mobileOpen && (
-          <motion.div
-            ref={menuRef}
-            initial={reduce ? false : { opacity: 0, y: -8 }}
-            animate={reduce ? false : { opacity: 1, y: 0 }}
-            exit={reduce ? false : { opacity: 0, y: -8 }}
-            transition={{ duration: 0.15 }}
-            className="md:hidden bg-nav backdrop-blur-md border-t bd-cute"
-          >
-            <div className="max-w-[720px] mx-auto px-4 py-4 flex flex-col gap-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`text-sm transition-colors px-2 py-3 min-h-[44px] flex items-center ${pathname === link.href ? "tx-main" : "tx-muted tx-hover"}`}
-                >
-                  {link.name}
-                </Link>
-              ))}
+          reduce ? (
+            <div
+              ref={menuRef}
+              className="md:hidden bg-nav backdrop-blur-md border-t bd-cute"
+            >
+              <div className="max-w-[720px] mx-auto px-4 py-4 flex flex-col gap-1">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`text-sm transition-colors px-2 py-3 min-h-[44px] flex items-center ${pathname === link.href ? "tx-main" : "tx-muted tx-hover"}`}
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+              </div>
             </div>
-          </motion.div>
+          ) : (
+            <motion.div
+              ref={menuRef}
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.15 }}
+              className="md:hidden bg-nav backdrop-blur-md border-t bd-cute"
+            >
+              <div className="max-w-[720px] mx-auto px-4 py-4 flex flex-col gap-1">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`text-sm transition-colors px-2 py-3 min-h-[44px] flex items-center ${pathname === link.href ? "tx-main" : "tx-muted tx-hover"}`}
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+              </div>
+            </motion.div>
+          )
         )}
       </AnimatePresence>
     </nav>

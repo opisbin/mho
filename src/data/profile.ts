@@ -1,6 +1,6 @@
 export const profile = {
   name: "Meherab Hossain",
-  title: "Full-Stack Developer & Designer",
+  title: "Architect of Autonomous Systems",
   subtitle: "Full-Stack Developer",
   bio: "I'm a full-stack developer and designer passionate about building beautiful, functional digital experiences. I focus on creating products that are both visually compelling and technically robust.",
   location: "Bangladesh",
@@ -20,6 +20,5 @@ export const navLinks = [
   { name: "Home", href: "/" },
   { name: "About", href: "/about" },
   { name: "Projects", href: "/projects" },
-  { name: "Components", href: "/components" },
   { name: "Blogs", href: "/blog" },
 ];
