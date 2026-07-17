@@ -1,0 +1,73 @@
+---
+title: "Claude Code Can Now Click Its Own Buttons"
+date: "2026-07-18"
+description: "Anthropic shipped computer use inside Claude Code's CLI. Claude can write Swift, compile it, launch the app, click every button, catch a visual bug, fix it, and re-verify — without you touching the mouse. Here's what it actually does and where it breaks."
+tags: [AI, Claude Code, Computer Use]
+image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa57?auto=format&fit=crop&w=1200&q=80"
+---
+
+## The short version
+
+Anthropic just shipped **computer use inside Claude Code's CLI**. Claude can now open apps, click UI elements, type, scroll, and navigate macOS — then use what it sees to verify the code it just wrote actually works. It's a research preview on macOS for Pro and Max plans, announced via [Claude's X account](https://x.com/claudeai/status/2038663014098899416) and covered by [Augmenter](https://augmenter.dev/articles/claude-code-adds-macos-ui-computer-use-from-the-cli-1774909478877/), [Recaply](https://www.recaply.co/p/claude-code-can-now-control-your-screen), and [AI Toast](https://aitoast.beehiiv.com/p/computer-use-is-now-in-claude-code).
+
+![Claude Code controlling macOS UI](https://images.unsplash.com/photo-1517694712202-14dd9538aa57?auto=format&fit=crop&w=1200&q=80)
+
+## What it actually does
+
+The killer demo: you ask Claude to build a macOS menu bar app. It writes the Swift, compiles it, launches the app, then **clicks through every control** to verify it works — all before you ever open it. If a button is misaligned or a checkbox doesn't toggle, Claude sees the visual bug, fixes the code, recompiles, and re-verifies. Loop closed.
+
+That last sentence is the part that matters. Every "AI built me an app" demo ends at `npm run build`. This one ends at "and then I watched it click its own buttons to confirm the checkbox actually toggles." That's a different category of demo.
+
+## Why this is a real shift
+
+Up until yesterday, AI coding agents had two ways of "testing" what they built:
+
+1. **Run a headless test suite** — fast, but tests only check what you wrote assertions for. If you forgot to assert the checkbox state, you don't catch the bug.
+2. **Print screenshots and ask the human** — Claude would emit a screenshot, you'd eyeball it, you'd tell it what's wrong. Slow, breaks flow, and forces you to be the visual regression detector.
+
+Computer use is a third option: Claude looks at the rendered UI itself, decides what's broken, fixes it, and re-checks. The loop closes without you. For indie devs shipping native Mac apps — menubar utilities, Preference Panes, SwiftUI toys — this is the first time "vibe-coded" doesn't mean "I hope it works."
+
+## What it's actually useful for today
+
+- **Native macOS menu bar apps** — the demo case. Small surface area, fast compile, easy to verify visually.
+- **Electron / Tauri apps** — same loop: build, launch, click through every nav route, screenshot, decide.
+- **Regression testing** — point Claude at your existing macOS app and ask "does the export flow still work?" Claude opens it, walks through the menu, reports back.
+- **QA on the GUI side of a CLI tool** — most CLIs ship with a tiny companion GUI. Claude can now verify both halves.
+
+## Where it breaks
+
+- **Web apps** — the research preview is macOS only. To test a web app you'd need Claude to drive a browser, which means `playwright` or similar. Anthropic said browser support is "coming", but today's preview is desktop.
+- **Anything requiring real keystrokes inside another app's text field** — Claude can type, but apps with complex input handling (think Adobe, Figma, audio editors) still misbehave.
+- **Animations and video output** — computer use sees screenshots at intervals. If your bug only manifests mid-animation, Claude won't catch it.
+- **Permission fatigue** — Claude asks for approval every time it opens a new app or clicks something sensitive. You'll say "yes" 30 times in a 10-minute session. There's a "trust this app" toggle but it's off by default, and rightly so.
+- **Cross-agent budget problem still unsolved** — this is happening on Anthropic's billable tokens. If you set a 200-step cap and Claude is on step 199 of "click every button in System Preferences", you'll watch it give up halfway through.
+
+## How to use it today
+
+```bash
+# Update Claude Code
+npm install -g @anthropic-ai/claude-code@latest
+
+# Be on Pro or Max plan (research preview gate)
+# Be on macOS (Windows/Linux not supported yet)
+
+# In a Claude Code session
+claude build me a menubar app that shows my CalDAV events for today
+# Claude will write Swift, compile, launch, click through, and report
+```
+
+You'll be prompted to grant Claude access to control each app it opens. You can turn this off per-app if you trust the project.
+
+## Reading the tea leaves
+
+Anthropic shipping this as a **CLI feature** rather than a separate product is the tell. They don't want a separate "Claude Computer Use" app — they want every Claude Code user to think of the screen as just another tool the agent can call. That puts pressure on Cursor, Codex CLI, and every other coding agent to either ship their own computer use or get comfortable being "the one that can't click."
+
+Cursor's advantage was always that it lived inside your editor. Claude Code's new advantage is that it lives inside your terminal but can leave it. Different bet on what "the agent's home base" looks like.
+
+My guess: in three months, every coding agent will have computer use. In six months, the ones that don't will be dead. The interesting fight is going to be about **which agent's computer use is the most reliable** — and on that front, Anthropic has a multi-year head start because they've been training computer-use models since the original Claude 3.5 Sonnet release in late 2024.
+
+For now, if you build native macOS apps for a living, the math just changed. Go try it.
+
+---
+
+*Spotted something I got wrong? Ping me on [X](https://x.com/opisbin). I write about AI coding tools and developer workflows every week.*
