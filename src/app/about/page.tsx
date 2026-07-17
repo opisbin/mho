@@ -48,13 +48,13 @@ export default function AboutPage() {
               About
             </h1>
             <p className="text-sm tx-muted">
-              {profile.title} · {profile.subtitle} based in {profile.location}
+              {profile.title} · {profile.subtitle}
             </p>
           </div>
 
           <div className="border bd-cute rounded-xl p-4 sm:p-5 mb-4 space-y-4">
             <p className="text-sm tx-muted leading-relaxed">
-              I&apos;m Meherab Hossain, a full-stack developer and designer based in Dhaka, Bangladesh. I build small, useful tools and write about the messy parts of AI-assisted dev work — token costs, runaway agents, the gap between vibe-coded demos and software you&apos;d ship to a customer.
+              I&apos;m Meherab Hossain, a full-stack developer and designer. I build small, useful tools and write about the messy parts of AI-assisted dev work — token costs, runaway agents, the gap between vibe-coded demos and software you&apos;d ship to a customer.
             </p>
           </div>
 
