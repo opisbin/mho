@@ -17,8 +17,10 @@ const BLOG_DIR = path.join(process.cwd(), "content", "blog");
 // --- Minimal frontmatter parser (YAML subset: key: value, arrays as comma list or YAML list) ---
 
 function parseFrontmatter(raw: string): { data: Record<string, unknown>; content: string } {
-  const match = /^---\s*\n([\s\S]*?)\n---\s*\n?([\s\S]*)$/.exec(raw);
-  if (!match) return { data: {}, content: raw };
+  // Normalize Windows line endings
+  const normalized = raw.replace(/\r\n/g, "\n");
+  const match = /^---\s*\n([\s\S]*?)\n---\s*\n?([\s\S]*)$/.exec(normalized);
+  if (!match) return { data: {}, content: normalized };
   const yaml = match[1];
   const content = match[2] ?? "";
   const data: Record<string, unknown> = {};
