@@ -29,7 +29,7 @@ export default function Footer() {
             Designed &amp; Developed by Meherab Hossain (Opi) with <span aria-label="love">❤️</span>
           </p>
           {visits !== null && (
-            <p className="text-base tx-main tabular-nums mt-2 text-center sm:text-left font-serif-display">
+            <p className="text-xl tx-main tabular-nums mt-2 text-center sm:text-left font-serif-display">
               Visitors #{visits.toLocaleString()}
             </p>
           )}
