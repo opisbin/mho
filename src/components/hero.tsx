@@ -41,7 +41,7 @@ export default function Hero() {
             <h1 className="text-4xl sm:text-5xl lg:text-[42px] leading-tight tx-main mb-6 font-serif-display" style={{ letterSpacing: "0.9px" }}>{profile.title}</h1>
             <div className="flex flex-wrap items-center gap-4 mb-8 group/ctas">
               <motion.a
-                href="mailto:hello@meherab.dev"
+                href="mailto:hmeherab@outlook.com"
                 className="btn-primary inline-flex items-center gap-1.5 px-5 py-1.5 rounded-lg text-sm font-medium"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.97 }}
@@ -59,7 +59,7 @@ export default function Hero() {
                 </motion.span>
               </motion.a>
               <motion.a
-                href="mailto:hello@meherab.dev?subject=Booking%20a%20call"
+                href="mailto:hmeherab@outlook.com?subject=Booking%20a%20call"
                 className="btn-ghost inline-flex items-center gap-1.5 px-5 py-1.5 rounded-lg border text-sm font-medium"
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}

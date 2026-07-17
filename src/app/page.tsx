@@ -3,8 +3,6 @@ import Hero from "@/components/hero";
 import GitHubContributions from "@/components/github-contributions";
 import ProjectsSection from "@/components/projects-section";
 import BlogSection from "@/components/blog-section";
-import ScrollReveal from "@/components/scroll-reveal";
-import SocialLinks from "@/components/social-links";
 
 export default function Home() {
   return (
@@ -15,12 +13,6 @@ export default function Home() {
         <GitHubContributions />
         <ProjectsSection />
         <BlogSection />
-        <ScrollReveal>
-          <footer className="border bd-cute rounded-xl p-4 sm:p-6 flex items-center justify-between">
-            <p className="text-xs tx-muted-darker">© {new Date().getFullYear()} Meherab Hossain</p>
-            <SocialLinks />
-          </footer>
-        </ScrollReveal>
       </main>
     </>
   );

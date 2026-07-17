@@ -10,7 +10,7 @@ export default function BlogSection() {
       <section className="border bd-cute rounded-xl p-4 sm:p-6" id="blog">
         <h2 className="text-lg font-medium tx-main mb-8">Blogs</h2>
         <div className="flex flex-col gap-6">
-          {blogPosts.map((post) => (
+          {blogPosts.slice(0, 3).map((post) => (
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
