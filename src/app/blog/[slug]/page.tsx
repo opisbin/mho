@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { blogPosts, getPostBySlug } from "@/data/blog";
+import { renderMarkdown } from "@/lib/blog-loader";
 import Navbar from "@/components/navbar";
 import ScrollReveal from "@/components/scroll-reveal";
 
@@ -55,24 +56,29 @@ export default async function BlogPostPage({ params }: PageProps) {
             {post.title}
           </h1>
 
-          <div className="flex flex-wrap gap-1.5 mb-8">
-            {post.tags.map((tag) => (
-              <span key={tag} className="text-[11px] tx-muted px-2 py-0.5 rounded-full border bd-cute">
-                {tag}
-              </span>
-            ))}
-          </div>
+          {post.coverImage && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={post.coverImage}
+              alt={post.title}
+              className="w-full rounded-xl mb-8 object-cover max-h-80"
+            />
+          )}
 
-          <article className="space-y-4 max-w-none tx-muted leading-relaxed">
-            {post.body.map((section, i) => (
-              <div key={i}>
-                {section.heading && (
-                  <h2 className="text-lg tx-main font-semibold mt-8 mb-3">{section.heading}</h2>
-                )}
-                <p className="text-[15px]">{section.text}</p>
-              </div>
-            ))}
-          </article>
+          {post.tags.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 mb-8">
+              {post.tags.map((tag) => (
+                <span key={tag} className="text-[11px] tx-muted px-2 py-0.5 rounded-full border bd-cute">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+
+          <article
+            className="blog-prose max-w-none tx-muted leading-relaxed"
+            dangerouslySetInnerHTML={{ __html: renderMarkdown(post.body) }}
+          />
 
           {others.length > 0 && (
             <div className="border-t bd-cute pt-8 mt-12">

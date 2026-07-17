@@ -9,6 +9,7 @@ import "@fontsource/geist-mono/400.css";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Footer from "@/components/footer";
+import SmoothCursor from "@/components/smooth-cursor";
 
 const themeInitScript = `
 (function() {
@@ -26,7 +27,6 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Meherab Hossain ✨ Full-Stack Developer & Designer",
     description: "Portfolio of Meherab Hossain, a design-engineer building digital experiences with the web.",
-    url: "https://www.srbh.site",
     siteName: "Meherab Hossain",
     type: "website",
   },
@@ -45,6 +45,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="antialiased">
         <a href="#main" className="skip-link">Skip to content</a>
+        <SmoothCursor />
         {children}
         <Footer />
         <Analytics />
