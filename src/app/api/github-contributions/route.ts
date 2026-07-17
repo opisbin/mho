@@ -5,6 +5,7 @@ const GITHUB_GRAPHQL = "https://api.github.com/graphql";
 const QUERY = `
   query($login: String!) {
     user(login: $login) {
+      avatarUrl
       contributionsCollection {
         contributionCalendar {
           totalContributions
@@ -56,15 +57,17 @@ export async function GET() {
     }
 
     const json = await res.json();
-    const calendar = json?.data?.user?.contributionsCollection?.contributionCalendar;
+    const user = json?.data?.user;
+    const calendar = user?.contributionsCollection?.contributionCalendar;
 
-    if (!calendar) {
+    if (!calendar || !user?.avatarUrl) {
       return NextResponse.json({ error: "No contribution data" }, { status: 500 });
     }
 
-    return NextResponse.json(calendar, {
-      headers: { "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400" },
-    });
+    return NextResponse.json(
+      { ...calendar, avatarUrl: user.avatarUrl },
+      { headers: { "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400" } }
+    );
   } catch (e: any) {
     return NextResponse.json({ error: e?.message || "fetch failed" }, { status: 500 });
   }

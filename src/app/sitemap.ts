@@ -4,7 +4,7 @@ import { blogPosts } from "@/data/blog";
 const baseUrl = "https://www.srbh.site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ["", "/about", "/projects", "/blog", "/components"].map((path) => ({
+  const staticRoutes = ["", "/about", "/projects", "/blog"].map((path) => ({
     url: `${baseUrl}${path}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
