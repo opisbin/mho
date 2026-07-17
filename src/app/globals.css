@@ -110,7 +110,8 @@ body {
 }
 
 ::selection {
-  background-color: var(--border);
+  background-color: #ff9d3d;
+  color: #1a0e00;
 }
 
 /* Subtle dot grid behind hero only - blueprint feel */
