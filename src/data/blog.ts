@@ -109,6 +109,35 @@ export const blogPosts: BlogPost[] = [
       },
     ],
   },
+{
+    slug: "claude-code-v2-1-212-anthropic-finally-admits-agents-run-away",
+    title: "Claude Code v2.1.212: Anthropic Finally Admits Agents Run Away",
+    date: "2026-07-17",
+    description: "Anthropic's latest Claude Code update ships hard session caps on WebSearch, subagent spawns, and Bash calls. Here's what changed, why it matters, and how to use the new /fork and /subtask commands before your next $400 bill.",
+    readingTime: "6 min",
+    tags: ["AI", "Claude Code", "Dev Tools"],
+    body: [
+      {
+        text: "Claude Code v2.1.212 landed yesterday (Jul 16, 2026) and it's the first update in months where Anthropic isn't shipping features — it's shipping guardrails. Three new session-wide caps, a rethink of how /fork works, and a new /subtask command. If you use Claude Code for any real work, you should update right now and set the caps before your next runaway session.",
+      },
+      {
+        heading: "Hard caps on runaway loops",
+        text: "Three new environment variables, three new defaults. WebSearch calls per session: 200 (CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION). Subagent spawns per session: 200 (CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION). Bash executions: similar limit. If your agent falls into a search loop, it now hits a wall at 200 calls and stops. No more $400 overnight surprises.",
+      },
+      {
+        heading: "/fork is now a real background session",
+        text: "/fork used to launch an in-session subagent. Now it copies your conversation into a new background session — its own row in 'claude agents' — and you keep working in the original. The in-session subagent it used to launch is now /subtask.",
+      },
+      {
+        heading: "Why this matters",
+        text: "A 755-point HN thread documented Claude Code Max users burning through their entire quota in 1.5 hours. A separate 50-day postmortem traced declining quality to three self-inflicted bugs. This is Anthropic's first public admission that runaway agents are a real problem and the fix is on them.",
+      },
+      {
+        heading: "What you should do today",
+        text: "Update: npm install -g @anthropic-ai/claude-code@latest. Tighten caps: export CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION=50. Try the new /fork. Then check 'claude agents' — your forked session appears with its own row, ready to /resume.",
+      },
+    ],
+  },
 ];
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
