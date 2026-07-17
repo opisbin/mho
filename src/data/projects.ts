@@ -19,7 +19,7 @@ export const projects: Project[] = [
     slug: "nova",
     category: "Software",
     tagline: "Self-healing CI/CD with ML-driven autoscaling",
-    description: "AI-driven CI/CD pipeline that auto-scales microservices based on real-time traffic patterns. Self-healing, with zero-downtime rollouts.",
+    description: "AI-driven CI/CD pipeline that auto scales microservices based on real-time traffic patterns. Self-healing, with zero-downtime rollouts.",
     longDescription: "Nova is a deployment orchestration platform that treats infrastructure as a control problem. A reinforcement-learning policy watches live traffic from the Istio mesh and adjusts replica counts, region weights, and canary percentages every 5 seconds. When a pod starts failing health checks, Nova quarantines it, rotates the underlying node, and replays the queued traffic — all without paging a human. Rollouts are declarative YAML; rollback is one command and completes in under 8 seconds. Built to handle 200+ microservices across 3 regions with a 99.99% SLA.",
     image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=600&q=80&fit=crop",
     url: "https://ping.srbh.site",
