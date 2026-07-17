@@ -14,36 +14,50 @@ export default function AboutPage() {
       <Navbar />
       <main id="main" className="max-w-[720px] mx-auto px-4 sm:px-6 pt-32 pb-16">
         <ScrollReveal>
-          <h1 className="text-3xl tx-main mb-8 font-serif-display">
-            About
-          </h1>
-          <p className="text-sm tx-muted leading-relaxed mb-6">
-            I'm {profile.name}, a full-stack developer and designer based in {profile.location}.
-            {profile.bio}
-          </p>
-          <p className="text-sm text-gray-400 leading-relaxed mb-6">
-            I focus on the intersection of design and engineering ??? building products that don't just work,
-            but feel good to use. I'm particularly interested in interactive interfaces, animation, and
-            the craft of typography on the web.
-          </p>
-          <p className="text-sm text-gray-400 leading-relaxed mb-12">
-            When I'm not coding, you can find me sketching interfaces, reading about new tools,
-            or contributing to open source projects.
-          </p>
+          <div className="border bd-cute rounded-xl p-4 sm:p-5 mb-4">
+            <h1
+              style={{ letterSpacing: "0.01em" }}
+              className="text-[36px] leading-none tx-main font-serif-display mb-2"
+            >
+              About
+            </h1>
+            <p className="text-sm tx-muted">
+              {profile.title} · {profile.subtitle} based in {profile.location}
+            </p>
+          </div>
 
-          <h2 className="text-lg font-medium tx-main mb-4">Connect</h2>
-          <div className="flex flex-col gap-2">
-            {socialLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm tx-muted tx-hover transition-colors"
-              >
-                {link.name} ???
-              </a>
-            ))}
+          <div className="border bd-cute rounded-xl p-4 sm:p-5 mb-4 space-y-4">
+            <p className="text-sm tx-muted leading-relaxed">
+              I'm {profile.name} — {profile.title.toLowerCase()} and {profile.subtitle.toLowerCase()} based in {profile.location}.
+              {profile.bio}
+            </p>
+            <p className="text-sm tx-muted leading-relaxed">
+              I focus on the intersection of design and engineering – building products that don&apos;t just work,
+              but feel good to use. I&apos;m particularly interested in interactive interfaces, animation, and
+              the craft of typography on the web.
+            </p>
+            <p className="text-sm tx-muted leading-relaxed">
+              When I&apos;m not coding, you can find me sketching interfaces, reading about new tools,
+              or contributing to open source projects.
+            </p>
+          </div>
+
+          <div className="border bd-cute rounded-xl p-4 sm:p-5">
+            <h2 className="text-base font-medium tx-main mb-4">Connect</h2>
+            <div className="flex flex-wrap gap-2">
+              {socialLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border bd-cute text-sm tx-muted hover:tx-main hover:border-[var(--text)] transition-all"
+                >
+                  {link.name}
+                  <span aria-hidden="true" className="opacity-50">→</span>
+                </a>
+              ))}
+            </div>
           </div>
         </ScrollReveal>
       </main>

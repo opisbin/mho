@@ -30,7 +30,7 @@ const QUERY = `
 
 export async function GET() {
   const token = process.env.GITHUB_TOKEN;
-  const login = process.env.GITHUB_LOGIN || "srbh";
+  const login = process.env.GITHUB_LOGIN || "opisbin";
 
   if (!token) {
     return NextResponse.json(

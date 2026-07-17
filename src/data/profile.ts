@@ -10,9 +10,8 @@ export const profile = {
 
 export const socialLinks = [
   { name: "X", url: "https://x.com/srbh_", icon: "x" },
-  { name: "GitHub", url: "https://github.com/srbh", icon: "github" },
+  { name: "GitHub", url: "https://github.com/opisbin", icon: "github" },
   { name: "LinkedIn", url: "https://linkedin.com/in/srbh", icon: "linkedin" },
-  { name: "Peerlist", url: "https://peerlist.io/srbh", icon: "peerlist" },
   { name: "Email", url: "mailto:hello@srbh.site", icon: "email" },
 ];
 
