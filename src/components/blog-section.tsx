@@ -1,10 +1,15 @@
 "use client";
 
 import ScrollReveal from "./scroll-reveal";
-import { blogPosts } from "@/data/blog";
 import Link from "next/link";
 
-export default function BlogSection() {
+interface BlogPostSummary {
+  title: string;
+  slug: string;
+  date: string;
+}
+
+export default function BlogSection({ blogPosts }: { blogPosts: BlogPostSummary[] }) {
   return (
     <ScrollReveal>
       <section className="border bd-cute rounded-xl p-4 sm:p-6" id="blog">

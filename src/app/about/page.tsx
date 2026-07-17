@@ -5,8 +5,34 @@ import { profile, socialLinks } from "@/data/profile";
 
 export const metadata: Metadata = {
   title: "About — Meherab Hossain",
-  description: `Full-stack developer and designer based in ${profile.location}. ${profile.bio}`,
+  description: `Full-stack developer and designer based in Dhaka, Bangladesh. I build small, useful tools and write about AI-assisted dev work, indie SaaS, and developer workflows.`,
 };
+
+const workOn = [
+  {
+    title: "AI coding tools in practice",
+    body: "Claude Code, Codex, Cursor, Hermes Agent. Not benchmark scores, but what actually holds up at 2am when the agent is on step 30 and the bill is climbing.",
+  },
+  {
+    title: "Indie and dev-tool SaaS",
+    body: "Small products with clear wedges. I write about the parts that aren't on the landing page: realistic MRR targets, marketing that doesn't feel like marketing, and why most \"AI wrapper\" ideas die in month two.",
+  },
+  {
+    title: "Developer workflows",
+    body: "The boring layer around AI agents: scripts that survive, CLIs that compose, configs that don't rot. Skills, hooks, MCP, scheduled jobs.",
+  },
+  {
+    title: "Design and frontend",
+    body: "Next.js, Tailwind, motion. The brief is always the same: ship something that feels fast, reads well, and doesn't beg for attention.",
+  },
+];
+
+const notInterested = [
+  "Benchmark theatre.",
+  '"AGI by Q3" thought leadership.',
+  "Tools that are demos with a landing page.",
+  "Anything that requires pretending the model is the product.",
+];
 
 export default function AboutPage() {
   return (
@@ -28,17 +54,38 @@ export default function AboutPage() {
 
           <div className="border bd-cute rounded-xl p-4 sm:p-5 mb-4 space-y-4">
             <p className="text-sm tx-muted leading-relaxed">
-              I'm {profile.name} — {profile.title.toLowerCase()} and {profile.subtitle.toLowerCase()} based in {profile.location}.
-              {profile.bio}
+              I&apos;m Meherab Hossain, a full-stack developer and designer based in Dhaka, Bangladesh. I build small, useful tools and write about the messy parts of AI-assisted dev work — token costs, runaway agents, the gap between vibe-coded demos and software you&apos;d ship to a customer.
             </p>
+          </div>
+
+          <div className="border bd-cute rounded-xl p-4 sm:p-5 mb-4">
+            <h2 className="text-base font-medium tx-main mb-4">What I work on</h2>
+            <div className="space-y-4">
+              {workOn.map((item) => (
+                <div key={item.title}>
+                  <h3 className="text-sm font-medium tx-main mb-1">{item.title}</h3>
+                  <p className="text-sm tx-muted leading-relaxed">{item.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="border bd-cute rounded-xl p-4 sm:p-5 mb-4">
+            <h2 className="text-base font-medium tx-main mb-4">What I&apos;m not interested in</h2>
+            <ul className="space-y-2">
+              {notInterested.map((item) => (
+                <li key={item} className="text-sm tx-muted flex items-start gap-2">
+                  <span className="tx-muted-darker mt-0.5">—</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="border bd-cute rounded-xl p-4 sm:p-5 mb-4">
+            <h2 className="text-base font-medium tx-main mb-4">How I work</h2>
             <p className="text-sm tx-muted leading-relaxed">
-              I focus on the intersection of design and engineering – building products that don&apos;t just work,
-              but feel good to use. I&apos;m particularly interested in interactive interfaces, animation, and
-              the craft of typography on the web.
-            </p>
-            <p className="text-sm tx-muted leading-relaxed">
-              When I&apos;m not coding, you can find me sketching interfaces, reading about new tools,
-              or contributing to open source projects.
+              I ship small. I keep things open source when I can. I&apos;d rather have 50 paying users who&apos;d miss the tool than 5,000 free users who churn the day a shinier thing shows up on Product Hunt. I write to think, and I publish what I learn so the next person doesn&apos;t have to rediscover it.
             </p>
           </div>
 

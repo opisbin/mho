@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next";
 import { blogPosts } from "@/data/blog";
 
-const baseUrl = "https://www.srbh.site";
+// Domain not set yet — swap in your production URL when ready (e.g. "https://meherab.com").
+const baseUrl = "";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = ["", "/about", "/projects", "/blog"].map((path) => ({
