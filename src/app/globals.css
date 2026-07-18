@@ -57,6 +57,9 @@
   --accent: #5b8def;
   --grind-empty: #1a1a1a;
   --grind-active: #2a7a2a;
+  --grind-bar: #3a3a3a;
+  --grind-marker: var(--accent);
+  --grind-link: var(--accent);
   --contrib-0: #1a1a1a;
   --contrib-1: #0d4429;
   --contrib-2: #166534;
@@ -80,6 +83,9 @@
   --accent: #2563eb;
   --grind-empty: #e5e5e5;
   --grind-active: #16a34a;
+  --grind-bar: #c4c4c4;
+  --grind-marker: var(--accent);
+  --grind-link: var(--accent);
   --contrib-0: #ebedf0;
   --contrib-1: #9be9a8;
   --contrib-2: #40c463;

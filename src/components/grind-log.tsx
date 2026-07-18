@@ -1,110 +1,164 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import { grindData, generateCalendarData, monthNames, getGrindEntry } from "@/data/grind-data";
+import { useState, useMemo } from "react";
+import { FiCheckCircle, FiArrowLeft, FiArrowRight, FiArrowUpRight } from "react-icons/fi";
+import { grindData, generateTimeline, barHeight, type GrindSegment } from "@/data/grind-data";
 
-const today = new Date();
+function Segment({ segment }: { segment: GrindSegment }) {
+  if (typeof segment === "string") return <>{segment}</>;
+  const external = /^https?:\/\//.test(segment.href);
+  return (
+    <a
+      href={segment.href}
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      className="transition-opacity hover:opacity-80 underline-offset-2 hover:underline"
+      style={{ color: "var(--grind-link)" }}
+    >
+      {segment.text}
+    </a>
+  );
+}
 
 export default function GrindLog() {
   const [currentEntryIndex, setCurrentEntryIndex] = useState(0);
-  const [currentMonth, setCurrentMonth] = useState(today.getMonth());
-  const [currentYear, setCurrentYear] = useState(today.getFullYear());
+  const timeline = useMemo(() => generateTimeline(), []);
 
   if (!grindData.length) {
     return (
-      <section className="py-16 sm:py-20" id="grind">
+      <section className="border bd-cute rounded-xl p-4 sm:p-6" id="grind">
         <h2 className="text-lg font-medium tx-main mb-8">Grind Log</h2>
         <p className="text-sm tx-muted">No logs yet. Start grinding!</p>
       </section>
     );
   }
 
-  const currentEntry = grindData[currentEntryIndex];
-  const calendarCells = generateCalendarData(currentYear, currentMonth);
+  const entry = grindData[currentEntryIndex];
 
-  const goPrev = () => { if (currentEntryIndex < grindData.length - 1) setCurrentEntryIndex(currentEntryIndex + 1); };
-  const goNext = () => { if (currentEntryIndex > 0) setCurrentEntryIndex(currentEntryIndex - 1); };
-  const goPrevMonth = () => { if (currentMonth === 0) { setCurrentMonth(11); setCurrentYear(currentYear - 1); } else setCurrentMonth(currentMonth - 1); };
-  const goNextMonth = () => { if (currentMonth === 11) { setCurrentMonth(0); setCurrentYear(currentYear + 1); } else setCurrentMonth(currentMonth + 1); };
+  // Newest entry is index 0. "Previous" moves to older entries (higher index).
+  const goPrev = () => setCurrentEntryIndex((i) => Math.min(i + 1, grindData.length - 1));
+  const goNext = () => setCurrentEntryIndex((i) => Math.max(i - 1, 0));
 
-  const jumpToDate = useCallback((dateStr: string) => {
-    if (!dateStr) return;
-    const idx = grindData.findIndex((e) => e.date === dateStr);
-    if (idx >= 0) setCurrentEntryIndex(idx);
-  }, []);
+  const jumpTo = (entryIndex: number) => {
+    if (entryIndex >= 0) setCurrentEntryIndex(entryIndex);
+  };
 
-  const todayStr = today.toISOString().split("T")[0];
+  const selectedTimelineIndex = timeline.findIndex((d) => d.date === entry.date);
+
+  const dateLabel = new Date(entry.date + "T00:00:00")
+    .toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })
+    .toUpperCase();
 
   return (
-    <section className="py-16 sm:py-20" id="grind">
-      <h2 className="text-lg font-medium tx-main mb-8">Grind Log</h2>
-      <div className="surface p-5 mb-8">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <p className="text-xs tx-muted mb-1">{currentEntry.logNumber}</p>
-            <p className="text-xs tx-muted uppercase tracking-wide">{new Date(currentEntry.date).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</p>
+    <section className="border bd-cute rounded-xl p-4 sm:p-6" id="grind">
+      {/* Header */}
+      <h2 className="text-lg font-medium tx-main mb-8">Grind Log {entry.logNumber}</h2>
+
+        {/* Checklist body */}
+        <ul className="space-y-3 mb-8">
+          {entry.items.map((item, i) => (
+            <li key={i} className="flex gap-3 text-sm tx-muted leading-relaxed">
+              <FiCheckCircle
+                className="mt-0.5 shrink-0"
+                size={15}
+                style={{ color: "var(--grind-active)" }}
+                aria-hidden="true"
+              />
+              <span>
+                {item.segments.map((seg, j) => (
+                  <Segment key={j} segment={seg} />
+                ))}
+              </span>
+            </li>
+          ))}
+        </ul>
+
+        {/* Timeline scrubber */}
+        <div className="mt-6">
+          <div className="flex items-center justify-between mb-4">
+            <button
+              onClick={goPrev}
+              disabled={currentEntryIndex === grindData.length - 1}
+              className="w-9 h-9 rounded-md border bd-cute flex items-center justify-center tx-muted hover:tx-main disabled:opacity-30 transition-colors"
+              aria-label="Previous log entry"
+            >
+              <FiArrowLeft size={15} />
+            </button>
+            <p className="text-xs font-mono-display tx-muted tracking-[0.2em]">{dateLabel}</p>
+            <button
+              onClick={goNext}
+              disabled={currentEntryIndex === 0}
+              className="w-9 h-9 rounded-md border bd-cute flex items-center justify-center tx-muted hover:tx-main disabled:opacity-30 transition-colors"
+              aria-label="Next log entry"
+            >
+              <FiArrowRight size={15} />
+            </button>
           </div>
-          <div className="flex gap-2">
-            <button onClick={goPrev} disabled={currentEntryIndex === grindData.length - 1} className="text-xs tx-muted hover:tx-main disabled:opacity-30 transition-colors px-2 py-1 min-w-[44px] min-h-[44px] flex items-center justify-center" aria-label="Previous entry">← Prev</button>
-            <button onClick={goNext} disabled={currentEntryIndex === 0} className="text-xs tx-muted hover:tx-main disabled:opacity-30 transition-colors px-2 py-1 min-w-[44px] min-h-[44px] flex items-center justify-center" aria-label="Next entry">Next →</button>
+
+          <div className="flex items-end justify-center gap-[3px] h-14 overflow-hidden">
+            {timeline.map((day, i) => {
+              const isSelected = i === selectedTimelineIndex;
+              const offset = i - selectedTimelineIndex; // <0 past, >0 future
+              const h = Math.round(barHeight(offset) * 100);
+
+              if (offset > 0) {
+                // Faint dotted bars for days after the selected one.
+                return (
+                  <span
+                    key={day.date}
+                    className="w-[3px] rounded-full"
+                    style={{
+                      height: `${h}%`,
+                      backgroundImage:
+                        "repeating-linear-gradient(to top, var(--grind-bar) 0 2px, transparent 2px 5px)",
+                      opacity: 0.4,
+                    }}
+                    aria-hidden="true"
+                  />
+                );
+              }
+
+              return (
+                <button
+                  key={day.date}
+                  onClick={() => jumpTo(day.entryIndex)}
+                  disabled={!day.hasEntry}
+                  aria-label={day.date + (day.hasEntry ? " — has entry" : "")}
+                  className={`w-[3px] rounded-full transition-all ${
+                    day.hasEntry ? "cursor-pointer hover:brightness-150" : "cursor-default"
+                  }`}
+                  style={{
+                    height: `${h}%`,
+                    backgroundColor: isSelected ? "var(--grind-marker)" : "var(--grind-bar)",
+                    opacity: isSelected ? 1 : 0.75,
+                  }}
+                />
+              );
+            })}
           </div>
         </div>
-        <p className="text-sm tx-muted leading-relaxed mb-3">{currentEntry.content}</p>
-        {currentEntry.leetcode && currentEntry.leetcode.length > 0 && (
-          <div className="flex flex-wrap gap-2 mt-3">
-            {currentEntry.leetcode.map((problem) => (
-              <span key={problem} className="text-xs px-2.5 py-1 rounded-full tx-muted border bd-cute" style={{ backgroundColor: "var(--grind-empty)" }}>{problem}</span>
-            ))}
+
+        {/* Quote footer */}
+        {entry.quote && (
+          <div className="mt-8 pt-6 border-t bd-cute text-center">
+            <p className="font-serif-display italic text-base tx-muted mb-2">
+              &ldquo;{entry.quote.text}&rdquo;
+            </p>
+            <p className="text-xs tx-muted-darker">
+              — {entry.quote.author}
+              {entry.quote.href && (
+                <a
+                  href={entry.quote.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center ml-1 hover:tx-muted transition-colors"
+                  aria-label={"Link for " + entry.quote.author}
+                >
+                  <FiArrowUpRight size={12} />
+                </a>
+              )}
+            </p>
           </div>
         )}
-      </div>
-      <div className="flex items-center justify-between mb-4">
-        <button onClick={goPrevMonth} className="text-xs tx-muted hover:tx-main px-2 py-1 min-w-[44px] min-h-[44px] flex items-center justify-center" aria-label="Previous month">←</button>
-        <p className="text-sm tx-main">{monthNames[currentMonth]} {currentYear}</p>
-        <button onClick={goNextMonth} className="text-xs tx-muted hover:tx-main px-2 py-1 min-w-[44px] min-h-[44px] flex items-center justify-center" aria-label="Next month">→</button>
-      </div>
-      <div className="grid grid-cols-7 gap-1.5 min-w-0">
-        {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
-          <div key={i} className="text-[10px] tx-muted-darker text-center h-4 flex items-center justify-center">{d}</div>
-        ))}
-        {calendarCells.map((cell, i) => {
-          if (cell.day === 0) return <div key={i} className="aspect-square" />;
-
-          const isFuture = cell.date > todayStr;
-          const isToday = cell.isCurrent;
-          const isActive = cell.active && !isFuture;
-
-          return (
-            <button
-              key={i}
-              onClick={() => jumpToDate(cell.date)}
-              disabled={!isActive && !isToday}
-              aria-label={cell.date}
-              className={`aspect-square rounded-sm transition-colors flex items-center justify-center text-[9px] cursor-pointer
-                ${isToday ? "bg-white ring-1 ring-white/40" : ""}
-                ${isActive && !isToday ? "hover:brightness-125 active:brightness-150" : ""}
-                ${!isActive && !isToday && cell.day > 0 ? "opacity-30" : ""}
-                ${cell.day === 0 ? "bg-transparent" : ""}
-              `}
-              style={
-                isFuture && !isToday
-                  ? { backgroundColor: "var(--grind-empty)", opacity: 0.25, cursor: "not-allowed" }
-                  : isToday
-                    ? {}
-                    : isActive
-                      ? { backgroundColor: "var(--grind-active)" }
-                      : cell.day > 0
-                        ? { backgroundColor: "var(--grind-empty)" }
-                        : {}
-              }
-            >
-              {cell.day > 0 && (
-                <span className={isToday ? "tx-main" : "tx-muted-darker"}>{cell.day}</span>
-              )}
-            </button>
-          );
-        })}
-      </div>
     </section>
   );
 }

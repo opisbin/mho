@@ -19,7 +19,7 @@ export default function Hero() {
   }, []);
   return (
     <ScrollReveal>
-      <section className="hero-grid border bd-cute rounded-xl p-4 sm:p-6 pt-8 pb-12">
+      <section id="hero" className="hero-grid border bd-cute rounded-xl p-4 sm:p-6 pt-8 pb-12">
         <div className="flex items-center gap-3 mb-6">
           {avatarUrl && (
             // eslint-disable-next-line @next/next/no-img-element

@@ -1,6 +1,7 @@
 import Navbar from "@/components/navbar";
 import Hero from "@/components/hero";
 import GitHubContributions from "@/components/github-contributions";
+import GrindLog from "@/components/grind-log";
 import ProjectsSection from "@/components/projects-section";
 import BlogSection from "@/components/blog-section";
 import { blogPosts } from "@/data/blog";
@@ -14,6 +15,7 @@ export default function Home() {
         <GitHubContributions />
         <ProjectsSection />
         <BlogSection blogPosts={blogPosts} />
+        <GrindLog />
       </main>
     </>
   );

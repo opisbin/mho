@@ -10,6 +10,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Footer from "@/components/footer";
 import SmoothCursor from "@/components/smooth-cursor";
+import ScrollProgress from "@/components/scroll-progress";
 
 const themeInitScript = `
 (function() {
@@ -47,6 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#main" className="skip-link">Skip to content</a>
         <SmoothCursor />
         {children}
+        <ScrollProgress />
         <Footer />
         <Analytics />
         <SpeedInsights />
